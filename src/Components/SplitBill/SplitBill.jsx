@@ -4,7 +4,7 @@ import Button from "./../Button/Button";
 export default function SplitBill() {
   return (
     <>
-      <div className=" sm:max-lg:w-full ">
+      <div className="sm:max-lg:w-full">
         <h2 className="text-2xl  capitalize mb-3">split bill with fathy</h2>
         <div className=" my-3 bg-slate-200 p-3 rounded-lg py-2 items-center">
           <div className="mb-3 flex justify-between items-center">
