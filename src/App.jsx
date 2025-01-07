@@ -8,6 +8,7 @@ import AddForm from "./Components/AddForm/AddForm";
 
 function App() {
   const [isOpen, setisOpen] = useState(false);
+  const [selectedFriend, setselectedFriend] = useState(null);
   const [List, setList] = useState([
     {
       id: 210,
@@ -35,27 +36,35 @@ function App() {
     },
   ]);
 
+  function selectFriend(friend) {
+    setselectedFriend(selected => selected?.id == friend.id ? null : friend);
+    setisOpen(false)
+    console.log(friend);
+  }
+
   function changeFriendForm() {
     setisOpen((isOpen) => !isOpen);
   }
 
   function addFriend(newFriend) {
     setList((friends) => [...friends, newFriend]);
-    setisOpen(false)
+    setisOpen(false);
   }
 
   return (
     <>
       <div className="container w-[90%] py-5 mx-auto p-4 lg:items-start bg-gray-400 my-7 flex gap-5 justify-center items-center flex-col lg:flex-row">
-        <div className="sm:max-lg:w-full">
+        <div className="lg:w-1/3 sm:max-lg:w-full ">
           <FriendList
+            selectedFriend={selectedFriend}
+            selectFriend={selectFriend}
             friendsList={List}
             changeFriendForm={changeFriendForm}
             isOpen={isOpen}
           />
           {isOpen && <AddForm setisOpen={setisOpen} addFriend={addFriend} />}
         </div>
-        <SplitBill />
+          {selectedFriend && <SplitBill selectedFriend={selectedFriend} />}
       </div>
     </>
   );
