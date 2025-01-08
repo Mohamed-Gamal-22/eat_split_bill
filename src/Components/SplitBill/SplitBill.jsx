@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Button from "./../Button/Button";
+import Swal from "sweetalert2";
 
 export default function SplitBill({ selectedFriend, splitTheBill }) {
   const [bill, setbill] = useState("");
@@ -9,6 +10,16 @@ export default function SplitBill({ selectedFriend, splitTheBill }) {
 
   function handleSubmit(e) {
     e.preventDefault();
+
+    if (!bill || !myPayment) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Bill or your Expense not found !",
+      });
+      return;
+    }
+
     whoPay !== "friend"
       ? splitTheBill(bill - myPayment)
       : splitTheBill(-myPayment);
