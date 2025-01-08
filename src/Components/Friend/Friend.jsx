@@ -12,7 +12,7 @@ export default function Friend({
   return (
     <>
       <div
-        className={`friend flex  items-center gap-4 my-3 ${
+        className={`friend flex flex-col w-full  text-center sm:text-left sm:flex-row  items-center gap-4 my-3 ${
           selectedFriend?.id == id ? "bg-yellow-100" : "bg-slate-200"
         } p-3 rounded-lg`}
       >
@@ -31,7 +31,7 @@ export default function Friend({
           )}
           {balance == 0 && <p>you & {name} are even</p>}
         </div>
-        <div className="flex ms-auto">
+        <div className="flex sm:ms-auto">
           <div className="mx-2" onClick={() => selectFriend(friend)}>
             <Button>{selectedFriend?.id !== id ? "Select" : "Close"}</Button>
           </div>

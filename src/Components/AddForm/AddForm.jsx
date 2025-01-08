@@ -27,8 +27,8 @@ export default function AddForm({ addFriend }) {
   return (
     <>
       <form onSubmit={handleSubmit}>
-        <div className="flex justify-between py-2 items-center">
-          <label htmlFor="name" className="text-white">
+        <div className="flex flex-col md:flex-row  justify-between py-2 sm:items-start">
+          <label htmlFor="name" className="text-white text-left mb-2 md:md-0">
             👦Friend Name
           </label>
           <input
@@ -37,11 +37,11 @@ export default function AddForm({ addFriend }) {
             placeholder="Name..."
             id="name"
             type="text"
-            className="rounded-md p-1"
+            className="rounded-md p-1 w-full md:w-fit"
           />
         </div>
-        <div className="flex justify-between py-2 items-center">
-          <label htmlFor="img" className="text-white">
+        <div className="flex flex-col md:flex-row justify-between py-2 sm:items-start mb-5">
+          <label htmlFor="img" className="text-white mb-2 md:md-0">
             🖼️Image URL
           </label>
           <input
@@ -50,7 +50,7 @@ export default function AddForm({ addFriend }) {
             placeholder="Image URL"
             id="img"
             type="text"
-            className="rounded-md text-dark p-1"
+            className="rounded-md text-dark p-1 w-full md:w-fit"
           />
         </div>
         <Button full={true}>Add Friend</Button>

@@ -59,7 +59,7 @@ function App() {
   return (
     <>
       <div className="container w-[90%] py-5 mx-auto px-2 lg:items-start rounded-md border-4 border-blue-400 bg-gray-800 my-7 flex gap-5 justify-center items-center flex-col lg:flex-row">
-        <div className="lg:w-1/2 sm:max-lg:w-full ">
+        <div className="w-full  lg:w-1/2 sm:max-lg:w-full ">
           <FriendList
             deleteFriend={deleteFriend}
             selectedFriend={selectedFriend}
