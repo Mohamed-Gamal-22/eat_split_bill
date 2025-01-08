@@ -7,14 +7,21 @@ export default function FriendList({
   changeFriendForm,
   isOpen,
   selectFriend,
-  selectedFriend
+  selectedFriend,
+  deleteFriend,
 }) {
   return (
     <div className="w-full">
-      <h2 className="text-2xl">FriendList</h2>
-      {friendsList.map((friend) => (
-        <Friend selectedFriend={selectedFriend} selectFriend={selectFriend} key={friend.id} friend={friend} />
-      ))}
+      {friendsList?.length > 0 ? <h2 className="text-3xl text-white font-bold">FriendList</h2> : null}
+      {friendsList?.length > 0 ? friendsList.map((friend) => (
+        <Friend
+          deleteFriend={deleteFriend}
+          selectedFriend={selectedFriend}
+          selectFriend={selectFriend}
+          key={friend.id}
+          friend={friend}
+        />
+      )) : <h1 className="my-7 text-center font-bold text-4xl text-yellow-400">Not have friends yet !</h1>}
       <div onClick={() => changeFriendForm()} className="my-2 ">
         <Button full={true}>{isOpen ? "Close" : "Add"}</Button>
       </div>

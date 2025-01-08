@@ -9,37 +9,17 @@ import AddForm from "./Components/AddForm/AddForm";
 function App() {
   const [isOpen, setisOpen] = useState(false);
   const [selectedFriend, setselectedFriend] = useState(null);
-  const [List, setList] = useState([
-    {
-      id: 210,
-      name: "ali",
-      image: "https://i.pravatar.cc/150?img=3",
-      balance: 20,
-    },
-    {
-      id: 211,
-      name: "fathy",
-      image: "https://i.pravatar.cc/150?img=3",
-      balance: -5,
-    },
-    {
-      id: 212,
-      name: "karim",
-      image: "https://i.pravatar.cc/150?img=3",
-      balance: 0,
-    },
-    {
-      id: 213,
-      name: "kamal",
-      image: "https://i.pravatar.cc/150?img=3",
-      balance: 15,
-    },
-  ]);
+  const [List, setList] = useState(
+    JSON.parse(localStorage.getItem("friends"))?.length > 0
+      ? JSON.parse(localStorage.getItem("friends"))
+      : []
+  );
 
   function selectFriend(friend) {
-    setselectedFriend(selected => selected?.id == friend.id ? null : friend);
-    setisOpen(false)
-    console.log(friend);
+    setselectedFriend((selected) =>
+      selected?.id == friend.id ? null : friend
+    );
+    setisOpen(false);
   }
 
   function changeFriendForm() {
@@ -47,15 +27,41 @@ function App() {
   }
 
   function addFriend(newFriend) {
-    setList((friends) => [...friends, newFriend]);
+    let copy = structuredClone(List);
+    copy.push(newFriend);
+    setList(copy);
+    // setList((friends) => [...friends, newFriend]);
     setisOpen(false);
+    localStorage.setItem("friends", JSON.stringify(copy));
+  }
+
+  function deleteFriend(id) {
+    // console.log(id);
+    let newList = structuredClone(List);
+    newList = newList.filter((friend) => friend.id != id);
+    setList(newList);
+    localStorage.setItem("friends", JSON.stringify(newList));
+  }
+
+  function splitTheBill(newValue) {
+    let myList = structuredClone(List); // take copy
+
+    for (const friend of myList) {
+      // edit
+      if (friend.id == selectedFriend?.id) {
+        friend.balance += newValue;
+      }
+    }
+    localStorage.setItem("friends", JSON.stringify(myList));
+    setList(myList); // setState
   }
 
   return (
     <>
-      <div className="container w-[90%] py-5 mx-auto p-4 lg:items-start bg-gray-400 my-7 flex gap-5 justify-center items-center flex-col lg:flex-row">
-        <div className="lg:w-1/3 sm:max-lg:w-full ">
+      <div className="container w-[90%] py-5 mx-auto px-2 lg:items-start rounded-md border-4 border-blue-400 bg-gray-800 my-7 flex gap-5 justify-center items-center flex-col lg:flex-row">
+        <div className="lg:w-1/2 sm:max-lg:w-full ">
           <FriendList
+            deleteFriend={deleteFriend}
             selectedFriend={selectedFriend}
             selectFriend={selectFriend}
             friendsList={List}
@@ -64,7 +70,12 @@ function App() {
           />
           {isOpen && <AddForm setisOpen={setisOpen} addFriend={addFriend} />}
         </div>
-          {selectedFriend && <SplitBill selectedFriend={selectedFriend} />}
+        {selectedFriend && (
+          <SplitBill
+            splitTheBill={splitTheBill}
+            selectedFriend={selectedFriend}
+          />
+        )}
       </div>
     </>
   );

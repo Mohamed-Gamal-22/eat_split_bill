@@ -1,7 +1,12 @@
 import React, { useState } from "react";
 import Button from "./../Button/Button";
 
-export default function Friend({ friend, selectFriend, selectedFriend }) {
+export default function Friend({
+  friend,
+  selectFriend,
+  selectedFriend,
+  deleteFriend,
+}) {
   let { id, name, image, balance } = friend;
 
   return (
@@ -29,6 +34,12 @@ export default function Friend({ friend, selectFriend, selectedFriend }) {
         <div className="ms-auto" onClick={() => selectFriend(friend)}>
           <Button>{selectedFriend?.id !== id ? "Select" : "Close"}</Button>
         </div>
+        <button
+          onClick={() => deleteFriend(id)}
+          className="bg-red-500 ms-1 transition-all duration-300 hover:bg-red-600 text-white p-2 px-4 rounded-lg pointer ms-auto"
+        >
+          Delete
+        </button>
       </div>
     </>
   );

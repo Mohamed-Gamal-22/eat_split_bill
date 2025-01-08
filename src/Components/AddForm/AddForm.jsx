@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Button from "../Button/Button";
 
-export default function AddForm({addFriend}) {
+export default function AddForm({ addFriend }) {
   const [name, setname] = useState("");
   const [image, setimage] = useState("https://i.pravatar.cc/150");
 
@@ -19,16 +19,16 @@ export default function AddForm({addFriend}) {
     };
 
     console.log(newFriend);
-    setname("")
-    setimage("")
-    addFriend(newFriend)
+    setname("");
+    setimage("");
+    addFriend(newFriend);
   }
 
   return (
     <>
       <form onSubmit={handleSubmit}>
-        <div className="flex justify-between  py-2 items-center">
-          <label htmlFor="name" className="">
+        <div className="flex justify-between py-2 items-center">
+          <label htmlFor="name" className="text-white">
             👦Friend Name
           </label>
           <input
@@ -40,8 +40,8 @@ export default function AddForm({addFriend}) {
             className="rounded-md p-1"
           />
         </div>
-        <div className="flex justify-between  py-2 items-center">
-          <label htmlFor="  " className="">
+        <div className="flex justify-between py-2 items-center">
+          <label htmlFor="img" className="text-white">
             🖼️Image URL
           </label>
           <input
@@ -50,7 +50,7 @@ export default function AddForm({addFriend}) {
             placeholder="Image URL"
             id="img"
             type="text"
-            className="rounded-md p-1"
+            className="rounded-md text-dark p-1"
           />
         </div>
         <Button full={true}>Add Friend</Button>
