@@ -1,10 +1,10 @@
 import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
+
 import "./App.css";
 import FriendList from "./Components/FriendsList/FriendList";
 import SplitBill from "./Components/SplitBill/SplitBill";
 import AddForm from "./Components/AddForm/AddForm";
+import Swal from "sweetalert2";
 
 function App() {
   const [isOpen, setisOpen] = useState(false);
@@ -14,6 +14,13 @@ function App() {
       ? JSON.parse(localStorage.getItem("friends"))
       : []
   );
+  const swalWithBootstrapButtons = Swal.mixin({
+    customClass: {
+      confirmButton: "bg-blue-500 text-white px-4 py-2 rounded-md mx-2",
+      cancelButton: "bg-red-500 text-white px-4 py-2 rounded-md mx-2",
+    },
+    buttonsStyling: false,
+  });
 
   function selectFriend(friend) {
     setselectedFriend((selected) =>
@@ -36,11 +43,40 @@ function App() {
   }
 
   function deleteFriend(id) {
-    // console.log(id);
-    let newList = structuredClone(List);
-    newList = newList.filter((friend) => friend.id != id);
-    setList(newList);
-    localStorage.setItem("friends", JSON.stringify(newList));
+    //
+    swalWithBootstrapButtons
+      .fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Yes, delete it!",
+        cancelButtonText: "No, cancel!",
+        reverseButtons: true,
+      })
+      .then((result) => {
+        if (result.isConfirmed) {
+          // delete friend without sweetaleert
+          let newList = structuredClone(List);
+          newList = newList.filter((friend) => friend.id != id);
+          setList(newList);
+          localStorage.setItem("friends", JSON.stringify(newList));
+          //
+          swalWithBootstrapButtons.fire({
+            title: "Deleted!",
+            text: "Your Friend has been deleted.",
+            icon: "success",
+          });
+        } else {
+          swalWithBootstrapButtons.fire({
+            title: "Cancelled",
+            text: "You did not delete Your friend 😎",
+            icon: "error",
+          });
+        }
+      });
+
+    //
   }
 
   function splitTheBill(newValue) {

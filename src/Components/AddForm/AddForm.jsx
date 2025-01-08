@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Button from "../Button/Button";
+import Swal from "sweetalert2";
 
 export default function AddForm({ addFriend }) {
   const [name, setname] = useState("");
@@ -7,7 +8,14 @@ export default function AddForm({ addFriend }) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    if (!name || !image) return;
+    if (!name || !image) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Name or Image not included",
+      });
+      return;
+    }
 
     const id = crypto.randomUUID();
 
@@ -22,6 +30,13 @@ export default function AddForm({ addFriend }) {
     setname("");
     setimage("");
     addFriend(newFriend);
+    Swal.fire({
+      position: "center-center",
+      icon: "success",
+      title: "You Added Friend Successfully",
+      showConfirmButton: false,
+      timer: 1500
+    });
   }
 
   return (
